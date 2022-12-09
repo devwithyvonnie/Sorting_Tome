@@ -12,29 +12,17 @@ import com.example.sorting_tome.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    //view binding
-    private ActivityMainBinding binding;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        //view binding
+        com.example.sorting_tome.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         //loginBtn click
-        binding.loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+        binding.loginBtn.setOnClickListener(view -> startActivity(new Intent( MainActivity.this,LoginActivity.class)));
 
         //skipBtn click
-        binding.skipBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+        binding.skipBtn.setOnClickListener(view -> startActivity(new Intent( MainActivity.this, DashboardAdminActivity.class)));
     }
 }

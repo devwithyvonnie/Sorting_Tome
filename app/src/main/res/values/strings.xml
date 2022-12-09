@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">Sorting_Tome</string>
+    <string name="new_user_signup">New User? <b>SignUp</b> </string>
+    <string name="logo">Logo</string>
+    <string name="please_login">Please Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="login">Login</string>
+    <string name="backbtn">backBtn</string>
+    <string name="create_new_account">Create New Account</string>
+    <string name="name">Name</string>
+    <string name="login2">Login</string>
+    <string name="forgot_password2">Forgot Password?</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="passwordEt">Password</string>
+    <string name="emailEt">Email</string>
+    <string name="register">Register</string>
+    <string name="firstlogo">logo</string>
+    <string name="welcome_to_the_sorting_tome">Welcome to The Sorting Tome</string>
+    <string name="firstlogin">Login</string>
+    <string name="continue_without_login">Continue without Login</string>
+    <string name="dashboard_user">Dashboard User</string>
+    <string name="abc_example_com">abc@example.com</string>
+    <string name="loginbtn">loginBtn</string>
+    <string name="abc_example_com2">abc@example.com</string>
+    <string name="dashboard_admin">Dashboard Admin</string><!--make sign up bold-->
 </resources>

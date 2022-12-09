@@ -14,7 +14,8 @@
         android:layout_width="200dp"
         android:layout_height="200dp" 
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"/>
+        android:layout_marginTop="40dp"
+        android:contentDescription="@string/firstlogo" />
     
     <TextView
         android:layout_width="wrap_content"
@@ -22,7 +23,7 @@
         android:layout_below="@+id/iconIv"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="Welcome to The Sorting Tome"
+        android:text="@string/welcome_to_the_sorting_tome"
         android:textColor="@color/black"
         android:textSize="16sp"/>
 
@@ -32,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/skipBtn"
         android:layout_marginBottom="10dp"
-        android:text="Login"
+        android:text="@string/firstlogin"
         android:background="@drawable/shape_button01"
         android:textColor="@color/white"/>
 
@@ -41,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="Continue without Login"
+        android:text="@string/continue_without_login"
         android:background="@drawable/shape_button02"
         android:textColor="@color/purple_500"/>
 
