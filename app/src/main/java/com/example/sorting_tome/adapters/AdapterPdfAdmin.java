@@ -1,5 +1,6 @@
 package com.example.sorting_tome.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,10 @@ import com.example.sorting_tome.databinding.RowPdfAdminBinding;
 import com.example.sorting_tome.models.ModelPdf;
 import com.github.barteksc.pdfviewer.PDFView;
 
+
 import java.util.ArrayList;
+
+
 
 public class AdapterPdfAdmin extends RecyclerView.Adapter<AdapterPdfAdmin.HolderPdfAdmin> {
     //Context
