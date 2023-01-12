@@ -1,9 +1,11 @@
-package com.example.sorting_tome;
+package com.example.sorting_tome.filters;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import android.widget.Filter;
+
+import com.example.sorting_tome.adapters.AdapterCategory;
+import com.example.sorting_tome.models.ModelCategory;
 
 public class FilterCategory extends Filter {
 

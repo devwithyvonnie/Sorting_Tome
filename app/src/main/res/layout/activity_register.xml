@@ -176,7 +176,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="5dp"
                 android:padding="5dp"
-                android:text="@string/forgot_password2"
+                android:text=""
                 android:textColor="@color/gray02"
                 tools:ignore="TextContrastCheck" />
 
@@ -185,7 +185,7 @@
                 android:id="@+id/registerBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/forgotTv"
+                android:layout_below="@+id/forgotTv"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/shape_button01"
                 android:text="@string/register"
@@ -200,16 +200,6 @@
     </ScrollView>
 
     <!--No Account, Register-->
-
-    <TextView
-        android:id="@+id/noAccountTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:padding="10dp"
-        android:text="@string/new_user_signup"
-        android:textColor="@color/black"/>
 
 
 </RelativeLayout>

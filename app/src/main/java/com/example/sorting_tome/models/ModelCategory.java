@@ -1,4 +1,4 @@
-package com.example.sorting_tome;
+package com.example.sorting_tome.models;
 
 public class ModelCategory {
     //make sure to use same spellings for model variables as in firebase
