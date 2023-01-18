@@ -20,7 +20,7 @@ public class MyApplication extends Application {
         cal.setTimeInMillis(timestamp);
 
         //format timestamp to MM/DD/YYYY
-        String date = DateFormat.format("MM/dd/yyyy", cal).toString();
+        String date = DateFormat.format("MM/DD/YYYY", cal).toString();
 
         return date;
     }

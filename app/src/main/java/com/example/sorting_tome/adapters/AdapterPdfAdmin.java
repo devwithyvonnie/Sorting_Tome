@@ -23,6 +23,7 @@ import com.example.sorting_tome.filters.FilterPdfAdmin;
 import com.example.sorting_tome.models.ModelPdf;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnErrorListener;
+import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.github.barteksc.pdfviewer.listener.OnPageErrorListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -45,8 +46,7 @@ public class AdapterPdfAdmin extends RecyclerView.Adapter<AdapterPdfAdmin.Holder
     private Context context;
 
     //arrayList to hold list of data of type ModelPdf
-    public ArrayList<ModelPdf> pdfArrayList;
-    private ArrayList<ModelPdf> filterList;
+    public ArrayList<ModelPdf> pdfArrayList, filterList;
 
     //view binding row_pdf_admin.xml
     private RowPdfAdminBinding binding;
@@ -152,13 +152,29 @@ public class AdapterPdfAdmin extends RecyclerView.Adapter<AdapterPdfAdmin.Holder
                                 .onError(new OnErrorListener() {
                                     @Override
                                     public void onError(Throwable t) {
+                                        //hide progress
+                                        holder.progressBar.setVisibility(View.INVISIBLE);
+
                                         Log.d(TAG, "onError: "+t.getMessage());
                                     }
                                 })
                                 .onPageError(new OnPageErrorListener() {
                                     @Override
                                     public void onPageError(int page, Throwable t) {
+                                        //hide progress
+                                        holder.progressBar.setVisibility(View.INVISIBLE);
+
                                         Log.d(TAG, "onPageError: "+t.getMessage());
+                                    }
+                                })
+                                .onLoad(new OnLoadCompleteListener() {
+                                    @Override
+                                    public void loadComplete(int nbPages) {
+                                        //pdf loaded
+                                        //hide progress
+                                        holder.progressBar.setVisibility(View.INVISIBLE);
+
+                                        Log.d(TAG, "loadComplete: PDF Loaded.");
                                     }
                                 })
                                 .load();
@@ -167,6 +183,9 @@ public class AdapterPdfAdmin extends RecyclerView.Adapter<AdapterPdfAdmin.Holder
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        //hide progress
+                        holder.progressBar.setVisibility(View.INVISIBLE);
+                        
                         Log.d(TAG, "onFailure: Failed to get file from url due to "+e.getMessage());
                     }
                 });
