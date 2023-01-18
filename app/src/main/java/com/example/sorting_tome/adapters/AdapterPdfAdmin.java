@@ -46,7 +46,8 @@ public class AdapterPdfAdmin extends RecyclerView.Adapter<AdapterPdfAdmin.Holder
     private Context context;
 
     //arrayList to hold list of data of type ModelPdf
-    public ArrayList<ModelPdf> pdfArrayList, filterList;
+    public ArrayList<ModelPdf> pdfArrayList;
+    private ArrayList<ModelPdf> filterList;
 
     //view binding row_pdf_admin.xml
     private RowPdfAdminBinding binding;
@@ -72,7 +73,7 @@ public class AdapterPdfAdmin extends RecyclerView.Adapter<AdapterPdfAdmin.Holder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HolderPdfAdmin holder, int position) {
+    public void onBindViewHolder(@NonNull AdapterPdfAdmin.HolderPdfAdmin holder, int position) {
         /*---Get data, set data, handle clicks, etc---*/
 
         //get data
@@ -152,29 +153,22 @@ public class AdapterPdfAdmin extends RecyclerView.Adapter<AdapterPdfAdmin.Holder
                                 .onError(new OnErrorListener() {
                                     @Override
                                     public void onError(Throwable t) {
-                                        //hide progress
                                         holder.progressBar.setVisibility(View.INVISIBLE);
-
                                         Log.d(TAG, "onError: "+t.getMessage());
                                     }
                                 })
                                 .onPageError(new OnPageErrorListener() {
                                     @Override
                                     public void onPageError(int page, Throwable t) {
-                                        //hide progress
                                         holder.progressBar.setVisibility(View.INVISIBLE);
-
                                         Log.d(TAG, "onPageError: "+t.getMessage());
                                     }
                                 })
                                 .onLoad(new OnLoadCompleteListener() {
                                     @Override
                                     public void loadComplete(int nbPages) {
-                                        //pdf loaded
-                                        //hide progress
                                         holder.progressBar.setVisibility(View.INVISIBLE);
-
-                                        Log.d(TAG, "loadComplete: PDF Loaded.");
+                                        Log.d(TAG, "LoadComplete: pdf loaded");
                                     }
                                 })
                                 .load();
@@ -183,9 +177,7 @@ public class AdapterPdfAdmin extends RecyclerView.Adapter<AdapterPdfAdmin.Holder
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        //hide progress
                         holder.progressBar.setVisibility(View.INVISIBLE);
-                        
                         Log.d(TAG, "onFailure: Failed to get file from url due to "+e.getMessage());
                     }
                 });

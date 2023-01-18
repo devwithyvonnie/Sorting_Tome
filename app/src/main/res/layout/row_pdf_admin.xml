@@ -21,6 +21,7 @@
             android:background="@color/gray01">
 
             <!--PDF View-->
+            <!--PDF View-->
             <com.github.barteksc.pdfviewer.PDFView
                 android:id="@+id/pdfView"
                 android:layout_width="match_parent"

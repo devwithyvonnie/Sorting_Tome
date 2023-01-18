@@ -1,6 +1,7 @@
 package com.example.sorting_tome;
 
 import static android.content.ContentValues.TAG;
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,6 +32,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -106,11 +109,12 @@ private String title = "",description = "";
     private void validateData(){
         Log.d(TAG, "validateData: validating data...");
 
-        //get data
+//get data
         title = binding.titleEt.getText().toString().trim();
         description = binding.descriptionTilEt.getText().toString().trim();
 
-        //validate data
+//validate data
+
         if(TextUtils.isEmpty(title)){
             Toast.makeText(this,"Enter Title...", Toast.LENGTH_SHORT).show();
 
@@ -206,6 +210,16 @@ private String title = "",description = "";
 
                     }
                 });
+
+
+
+
+
+
+
+
+
+
     }
 
     private void pdfPickIntent(){
@@ -243,9 +257,6 @@ private String title = "",description = "";
 
     }
 
-    /* Changes in PDF ADD FEATURE:
-    *  Currently: We are adding pdf category while adding PDF info to Realtime DB
-    *  Now: We will add categoryId */
 
 
     private void loadPdfCategories() {
@@ -259,16 +270,13 @@ private String title = "",description = "";
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 categoryTitleArrayList.clear();//clear before adding data
                 categoryIdArrayList.clear();
-
                 for(DataSnapshot ds: snapshot.getChildren()){
-                    //Get ID and Title of Category
-                    String categoryId = ""+ds.child("id").getValue();
-                    String categoryTitle = ""+ds.child("category").getValue();
 
-                    //add to respective arrayLists
-                    categoryIdArrayList.add(categoryId);
-                    categoryTitleArrayList.add(categoryTitle);
+                   String categoryId = ""+ds.child("id").getValue();
+                   String categoryTitle = ""+ds.child("category").getValue();
 
+                   categoryTitleArrayList.add(categoryTitle);
+                   categoryIdArrayList.add(categoryId);
                 }
 
             }
@@ -282,12 +290,13 @@ private String title = "",description = "";
     }
 
 
-        //selected category id and category title
-        private String selectedCategoryId, selectedCategoryTitle;
-        private void categoryPickDialog() {
+
+    private String selectedCategoryId, selectedCategoryTitle;
+
+    private void categoryPickDialog() {
         Log.d(TAG, "categoryPickDialog: showing category pick dialog");
-        String[] categoriesArray = new String[  categoryTitleArrayList.size()];
-        for(int i = 0; i< categoryTitleArrayList.size(); i++) {
+        String[] categoriesArray = new String[ categoryTitleArrayList.size()];
+        for(int i =0; i<categoryTitleArrayList.size();i++) {
             categoriesArray[i] = categoryTitleArrayList.get(i);
 
 
@@ -302,10 +311,9 @@ private String title = "",description = "";
                         //handle item click
                         //get clicked item from list
                         selectedCategoryTitle = categoryTitleArrayList.get(which);
-                        selectedCategoryId = categoryIdArrayList.get(which);
-                        binding.categoryTv.setText(selectedCategoryTitle);
-
-                        Log.d(TAG, "onClick: Selected Category"+ selectedCategoryId+" "+selectedCategoryTitle);
+                       selectedCategoryId = categoryIdArrayList.get(which);
+                       binding.categoryTv.setText(selectedCategoryTitle);
+                      Log.d(TAG, "onClick: Selected Category"+selectedCategoryId+" "+selectedCategoryTitle);
                     }
                 })
                 .show();
