@@ -1,7 +1,6 @@
 package com.example.sorting_tome;
 
 import static android.content.ContentValues.TAG;
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,8 +30,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -49,7 +46,8 @@ public class PdfAddActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
-    private ArrayList<ModelCategory> categoryArrayList;
+    private ArrayList<String> categoryTitleArrayList, categoryIdArrayList
+            ;
 
   private Uri pdfUri = null;
 
@@ -69,7 +67,7 @@ public class PdfAddActivity extends AppCompatActivity {
         loadPdfCategories();
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("PLease wait");
+        progressDialog.setTitle("Please wait");
         progressDialog.setCanceledOnTouchOutside(false);
 
         binding.backBtn.setOnClickListener(new View.OnClickListener() {
@@ -104,14 +102,13 @@ public class PdfAddActivity extends AppCompatActivity {
         });
 
     }
-private String title = "",description = "", category = "";
+private String title = "",description = "";
     private void validateData(){
         Log.d(TAG, "validateData: validating data...");
 
 //get data
         title = binding.titleEt.getText().toString().trim();
         description = binding.descriptionTilEt.getText().toString().trim();
-        category = binding.categoryTv.getText().toString().trim();
 //validate data
 
         if(TextUtils.isEmpty(title)){
@@ -122,7 +119,7 @@ private String title = "",description = "", category = "";
         else if(TextUtils.isEmpty(description)){
             Toast.makeText(this,"Enter Description...", Toast.LENGTH_SHORT).show();
         }
-        else if(TextUtils.isEmpty(category)){
+        else if(TextUtils.isEmpty(selectedCategoryTitle)){
             Toast.makeText(this,"Pick Category...", Toast.LENGTH_SHORT).show();
         }
         else if(pdfUri == null){
@@ -165,8 +162,8 @@ private String title = "",description = "", category = "";
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         progressDialog.dismiss();
-                        Log.d(TAG, "onFailure: PDF upload failed due" + e.getMessage());
-                        Toast.makeText(PdfAddActivity.this,  "PDF upload failed due to"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "onFailure: PDF upload failed due " + e.getMessage());
+                        Toast.makeText(PdfAddActivity.this,  "PDF upload failed due to "+e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -182,9 +179,10 @@ private String title = "",description = "", category = "";
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("uid", ""+uid);
         hashMap.put("id", ""+timestamp);
+        hashMap.put("title", ""+title);
         hashMap.put("description", ""+description);
+        hashMap.put("categoryId", ""+selectedCategoryId);
         hashMap.put("url", ""+uploadPdfUrl);
-        hashMap.put("category", ""+category);
         hashMap.put("timestamp", ""+timestamp);
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Books");
@@ -205,7 +203,7 @@ private String title = "",description = "", category = "";
                     public void onFailure(@NonNull Exception e) {
                         progressDialog.dismiss();
                         Log.d(TAG, "onFailure: Failed to upload to db due to "+e.getMessage());
-                        Toast.makeText(PdfAddActivity.this, "Failed to upload to db due to"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PdfAddActivity.this, "Failed to upload to db due to "+e.getMessage(), Toast.LENGTH_SHORT).show();
 
                     }
                 });
@@ -256,22 +254,32 @@ private String title = "",description = "", category = "";
 
     }
 
+    /* Changes in PDF Add Feature:
+    *  Currently: We are adding PDF Category while adding PDF info to Realtime DB
+    *  Now: we will add categoryId instead of category*/
 
 
     private void loadPdfCategories() {
         Log.d(TAG, "loadPdfCategories: Loading pdf categories...");
-        categoryArrayList = new ArrayList<>();
+        categoryTitleArrayList = new ArrayList<>();
+        categoryIdArrayList = new ArrayList<>();
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Categories");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                categoryArrayList.clear();//clear before adding data
+                categoryTitleArrayList.clear();//clear before adding data
+                categoryIdArrayList.clear();
+
                 for(DataSnapshot ds: snapshot.getChildren()){
 
-                    ModelCategory model = ds.getValue(ModelCategory.class);
-                    categoryArrayList.add(model);
-                    Log.d(TAG, "onDataChange: "+model.getCategory());
+                    //set id and title of category
+                    String categoryId = ""+ds.child("id").getValue();
+                    String categoryTitle = ""+ds.child("category").getValue();
+
+                    //add to respective arrayList
+                    categoryTitleArrayList.add(categoryTitle);
+                    categoryIdArrayList.add(categoryId);
 
                 }
 
@@ -285,12 +293,14 @@ private String title = "",description = "", category = "";
 
     }
 
+    //selected categoryId and categoryTitle
+    private String selectedCategoryId, selectedCategoryTitle;
 
     private void categoryPickDialog() {
         Log.d(TAG, "categoryPickDialog: showing category pick dialog");
-        String[] categoriesArray = new String[  categoryArrayList.size()];
-        for(int i =0; i<categoryArrayList.size();i++) {
-            categoriesArray[i] = categoryArrayList.get(i).getCategory();
+        String[] categoriesArray = new String[  categoryTitleArrayList.size()];
+        for(int i = 0; i< categoryTitleArrayList.size(); i++) {
+            categoriesArray[i] = categoryTitleArrayList.get(i);
 
 
         }
@@ -303,10 +313,12 @@ private String title = "",description = "", category = "";
                     public void onClick(DialogInterface dialog, int which) {
                         //handle item click
                         //get clicked item from list
-                        String category = categoriesArray[which];
-                        binding.categoryTv.setText(category);
+                        selectedCategoryTitle = categoryTitleArrayList.get(which);
+                        selectedCategoryId = categoryIdArrayList.get(which);
 
-                        Log.d(TAG, "onClick: Selected Category"+ category);
+                        binding.categoryTv.setText(selectedCategoryTitle);
+
+                        Log.d(TAG, "onClick: Selected Category: "+ selectedCategoryId+" "+selectedCategoryTitle);
                     }
                 })
                 .show();

@@ -140,6 +140,7 @@
                     tools:ignore="TextContrastCheck" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
                 <!--Confirm Password-->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/cPasswordTil"
@@ -147,25 +148,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/passwordTil"
                 android:layout_marginTop="5dp"
-                app:passwordToggleEnabled="true"
-                app:hintEnabled="false">
-
-                <EditText
-                    android:id="@+id/cPasswordEt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:autofillHints="cPasswordEt"
-                    android:background="@drawable/shape_edittext01"
-                    android:drawableStart="@drawable/ic_lock_gray"
-                    android:drawablePadding="10dp"
-                    android:hint="@string/confirm_password"
-                    android:inputType="textPassword"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/gray01"
-                    tools:ignore="TextContrastCheck" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+                android:hint="@string/confirm_password"
+                app:passwordToggleEnabled="true" />
 
             <!--Forgot password-->
             <TextView
@@ -176,7 +160,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="5dp"
                 android:padding="5dp"
-                android:text="@string/forgot_password2"
+                android:text=""
                 android:textColor="@color/gray02"
                 tools:ignore="TextContrastCheck" />
 
@@ -192,24 +176,9 @@
                 android:textColor="@color/white"/>
 
 
-
-
         </RelativeLayout>
 
 
     </ScrollView>
-
-    <!--No Account, Register-->
-
-    <TextView
-        android:id="@+id/noAccountTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:padding="10dp"
-        android:text="@string/new_user_signup"
-        android:textColor="@color/black"/>
-
 
 </RelativeLayout>

@@ -44,6 +44,13 @@ public class CategoryAddActivity extends AppCompatActivity {
                 validateData();
             }
         });
+
+        binding.backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private String category = "";

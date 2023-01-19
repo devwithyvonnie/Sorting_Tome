@@ -1,8 +1,9 @@
-package com.example.sorting_tome;
+package com.example.sorting_tome.adapters;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.sorting_tome.PdfListAdminActivity;
+import com.example.sorting_tome.filters.FilterCategory;
+import com.example.sorting_tome.models.ModelCategory;
 import com.example.sorting_tome.databinding.RowCategoryBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,7 +36,7 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.Holder
     private RowCategoryBinding binding;
 
     //instance of our filter class
-    private  FilterCategory filter;
+    private FilterCategory filter;
 
     public AdapterCategory(Context context, ArrayList<ModelCategory> categoryArrayList) {
         this.context = context;
@@ -84,6 +88,17 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.Holder
                             }
                         })
                         .show();
+            }
+        });
+
+        //Handle item click, goto PdfListAdminActivity, also pass pdf category and categoryId
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, PdfListAdminActivity.class);
+                intent.putExtra("categoryId", id);
+                intent.putExtra("categoryTitle", category);
+                context.startActivity(intent);
             }
         });
     }

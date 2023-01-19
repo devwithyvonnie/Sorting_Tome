@@ -60,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
             name = binding.nameEt.getText().toString().trim();
             email = binding.emailEt.getText().toString().trim();
             password = binding.passwordEt.getText().toString().trim();
-            String cPassword = binding.cPasswordEt.getText().toString().trim();
+            String cPassword = binding.passwordEt.getText().toString().trim();
 
             if (TextUtils.isEmpty(name)) {
 
